@@ -74,7 +74,7 @@ namespace HumaneSociety
             }            
         }     
 
-        private void ApplyForAdoption()
+        public void ApplyForAdoption()
         {
             Console.Clear();
             UserInterface.DisplayUserOptions("Please enter the ID of the animal you wish to adopt or type reset or exit");
