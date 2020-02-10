@@ -168,16 +168,22 @@ namespace HumaneSociety
         {
             switch (crudOperation)
             {
-                case "update": 
+                case "update":
+                    UpdateEmployee(employee);
                     break;
 
                 case "read":
+                    SelectEmployee(employee);
                     break;
 
                 case "delete":
+                    db.Employees.DeleteOnSubmit(employee);
+                    db.SubmitChanges();
                     break;
 
                 case "create":
+                    db.Employees.InsertOnSubmit(employee);
+                    db.SubmitChanges();
                     break;
             }
         }
@@ -257,6 +263,42 @@ namespace HumaneSociety
         internal static void UpdateShot(string shotName, Animal animal)
         {
             throw new NotImplementedException();
+        }
+        internal static void UpdateEmployee(Employee employeeWithUpdates)
+        {
+            Employee employeeFromDB = null;
+
+            try
+            {
+                employeeFromDB = db.Employees.Where(c => c.EmployeeId == employeeWithUpdates.EmployeeId).Single();
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("No clients have a EmployeeId that matches the Employee passed in.");
+                Console.WriteLine("No update have been made.");
+                return;
+            }
+            employeeFromDB.FirstName = employeeWithUpdates.FirstName;
+            employeeFromDB.LastName = employeeWithUpdates.LastName;
+            employeeFromDB.UserName = employeeWithUpdates.UserName;
+            employeeFromDB.Password = employeeWithUpdates.Password;
+            employeeFromDB.EmployeeNumber = employeeWithUpdates.EmployeeNumber;
+            employeeFromDB.Email = employeeWithUpdates.Email;
+
+            db.SubmitChanges();
+        }
+        internal static Employee  SelectEmployee(Employee employeeToCheck)
+        {
+            Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeToCheck.EmployeeId).FirstOrDefault();
+
+            if(employeeFromDb == null)
+            {
+                throw new NullReferenceException;
+            }
+            else
+            {
+                return employeeFromDb;
+            }
         }
     }
 }
