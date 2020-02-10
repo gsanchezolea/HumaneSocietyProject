@@ -26,8 +26,9 @@ namespace HumaneSociety.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-T9G3TBLK\\SQLEXPRESS;Initial Catalog=HumaneSociety;Integrated S" +
-            "ecurity=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False")]
+
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-1VLVTK4\\SQLEXPRESS;Initial Catalog=HumaneSociety;Integrated S" +
+                        "ecurity=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False")]
         public string HumaneSocietyConnectionString {
             get {
                 return ((string)(this["HumaneSocietyConnectionString"]));
