@@ -10,6 +10,8 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
+            Customer customer = new Customer();
+            customer.ApplyForAdoption();
             PointOfEntry.Run();
         }
     }
