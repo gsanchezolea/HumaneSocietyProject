@@ -216,7 +216,7 @@ namespace HumaneSociety
                     case 3:
                         db.Animals.Where(a => a.Age == Convert.ToInt32(updates[3])).FirstOrDefault();
                         break;
-                    case 4]:
+                    case 4:
                         db.Animals.Where(a => a.Demeanor == updates[4]).FirstOrDefault();
                         break;
                     case 5:
@@ -250,12 +250,13 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            var categoryIDChecked = db.Categories.Where(c => c.Name == categoryName).Select(c => c.CategoryId).Single();
+                return categoryIDChecked;
         }
         
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            
         }
         
         internal static int GetDietPlanId(string dietPlanName)
@@ -304,7 +305,7 @@ namespace HumaneSociety
             }
             catch (InvalidOperationException e)
             {
-                Console.WriteLine("No clients have a EmployeeId that matches the Employee passed in.");
+                Console.WriteLine("No employees have a EmployeeId that matches the Employee passed in.");
                 Console.WriteLine("No update have been made.");
                 return;
             }
@@ -317,17 +318,17 @@ namespace HumaneSociety
 
             db.SubmitChanges();
         }
-        internal static Employee  SelectEmployee(Employee employeeToCheck)
+        internal static void  SelectEmployee(Employee employeeToCheck)
         {
             Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeToCheck.EmployeeId).FirstOrDefault();
 
             if(employeeFromDb == null)
             {
-                throw new NullReferenceException;
+                throw new NullReferenceException();
             }
             else
             {
-                return employeeFromDb;
+                Console.WriteLine(employeeFromDb);
             }
         }
     }
