@@ -316,12 +316,26 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            if (isAdopted)
+            {
+                adoption.ApprovalStatus = "Adopted";
+                adoption.PaymentCollected = true;
+                db.SubmitChanges();
+            }
+            else
+            {
+                adoption.ApprovalStatus = "Denied";
+                var adoptedAnimal = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+                adoptedAnimal.AdoptionStatus = "Available";
+                db.SubmitChanges();
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var removedAdoption = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).FirstOrDefault();
+            db.Adoptions.DeleteOnSubmit(removedAdoption);
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
