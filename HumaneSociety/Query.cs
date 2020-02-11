@@ -192,13 +192,11 @@ namespace HumaneSociety
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
-
         internal static Animal GetAnimalByID(int id)
         {
             var animal = db.Animals.Where(a => a.AnimalId == id).FirstOrDefault();
             return animal;
         }
-
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
             var animal = db.Animals.Where(a => a.AnimalId == animalId).FirstOrDefault();
@@ -239,8 +237,6 @@ namespace HumaneSociety
             db.Animals.DeleteOnSubmit(animal);
             db.SubmitChanges();
         }
-
-        // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             var animal = db.Animals;
@@ -293,8 +289,6 @@ namespace HumaneSociety
             var dietPlanID = db.DietPlans.Where(d => d.Name == dietPlanName).Select(i => i.DietPlanId).FirstOrDefault();
             return dietPlanID;
         }
-
-        // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
             var adoptedAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
@@ -341,7 +335,7 @@ namespace HumaneSociety
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
-            throw new NotImplementedException();
+            
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
