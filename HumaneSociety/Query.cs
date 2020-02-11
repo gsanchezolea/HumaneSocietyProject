@@ -168,16 +168,22 @@ namespace HumaneSociety
         {
             switch (crudOperation)
             {
-                case "update": 
+                case "update":
+                    UpdateEmployee(employee);
                     break;
 
                 case "read":
+                    SelectEmployee(employee);
                     break;
 
                 case "delete":
+                    db.Employees.DeleteOnSubmit(employee);
+                    db.SubmitChanges();
                     break;
 
                 case "create":
+                    db.Employees.InsertOnSubmit(employee);
+                    db.SubmitChanges();
                     break;
             }
         }
@@ -210,7 +216,11 @@ namespace HumaneSociety
                         animal.Age = Convert.ToInt32(updates[3]);
                         break;
                     case 4:
+<<<<<<< HEAD
                         animal.Demeanor = updates[4];
+=======
+                        db.Animals.Where(a => a.Demeanor == updates[4]).FirstOrDefault();
+>>>>>>> eb4933b999756a22677b17708c75f5921666aa92
                         break;
                     case 5:
                         animal.KidFriendly = Convert.ToBoolean(Convert.ToInt32(updates[5]));
@@ -274,17 +284,20 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            var categoryID= db.Categories.Where(c => c.Name == categoryName).Select(i => i.CategoryId).FirstOrDefault();
+                return categoryID;
         }
         
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            var room = db.Rooms.Where(r => r.AnimalId == animalId).Single();
+            return room;
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            var dietPlanID = db.DietPlans.Where(d => d.Name == dietPlanName).Select(i => i.DietPlanId).FirstOrDefault();
+            return dietPlanID;
         }
 
         // TODO: Adoption CRUD Operations
@@ -317,6 +330,42 @@ namespace HumaneSociety
         internal static void UpdateShot(string shotName, Animal animal)
         {
             throw new NotImplementedException();
+        }
+        internal static void UpdateEmployee(Employee employeeWithUpdates)
+        {
+            Employee employeeFromDB = null;
+
+            try
+            {
+                employeeFromDB = db.Employees.Where(c => c.EmployeeId == employeeWithUpdates.EmployeeId).Single();
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("No employees have a EmployeeId that matches the Employee passed in.");
+                Console.WriteLine("No update have been made.");
+                return;
+            }
+            employeeFromDB.FirstName = employeeWithUpdates.FirstName;
+            employeeFromDB.LastName = employeeWithUpdates.LastName;
+            employeeFromDB.UserName = employeeWithUpdates.UserName;
+            employeeFromDB.Password = employeeWithUpdates.Password;
+            employeeFromDB.EmployeeNumber = employeeWithUpdates.EmployeeNumber;
+            employeeFromDB.Email = employeeWithUpdates.Email;
+
+            db.SubmitChanges();
+        }
+        internal static void  SelectEmployee(Employee employeeToCheck)
+        {
+            Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeToCheck.EmployeeId).FirstOrDefault();
+
+            if(employeeFromDb == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                Console.WriteLine(employeeFromDb);
+            }
         }
     }
 }
