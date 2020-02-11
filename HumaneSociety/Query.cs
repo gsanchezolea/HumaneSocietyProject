@@ -216,11 +216,7 @@ namespace HumaneSociety
                         animal.Age = Convert.ToInt32(updates[3]);
                         break;
                     case 4:
-<<<<<<< HEAD
                         animal.Demeanor = updates[4];
-=======
-                        db.Animals.Where(a => a.Demeanor == updates[4]).FirstOrDefault();
->>>>>>> eb4933b999756a22677b17708c75f5921666aa92
                         break;
                     case 5:
                         animal.KidFriendly = Convert.ToBoolean(Convert.ToInt32(updates[5]));
@@ -280,8 +276,6 @@ namespace HumaneSociety
             }
             return animal;
         }
-         
-        // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
             var categoryID= db.Categories.Where(c => c.Name == categoryName).Select(i => i.CategoryId).FirstOrDefault();
@@ -303,12 +297,21 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+            var adoptedAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            adoptedAnimal.AdoptionStatus = "Adoption Pending";
+            var adoptionRow = db.Adoptions.FirstOrDefault();
+            adoptionRow.ClientId = client.ClientId;
+            adoptionRow.AnimalId = animal.AnimalId;
+            adoptionRow.ApprovalStatus = "Pending";
+            adoptionRow.AdoptionFee = 75;
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            var pendingAdoptions = db.Adoptions;
+            pendingAdoptions.Where(a => a.ApprovalStatus == "Pending");
+            return pendingAdoptions;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
