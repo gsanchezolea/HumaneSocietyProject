@@ -202,10 +202,9 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
-<<<<<<< HEAD
-=======
+
             var animal = db.Animals.Where(a => a.AnimalId == animalId).FirstOrDefault();
->>>>>>> de6765d56852a9a4e1f774162c4e84496386a7a4
+
             foreach (var update in updates)
             {
                 switch (update.Key)
@@ -280,11 +279,10 @@ namespace HumaneSociety
             }
             return animal;
         }
-<<<<<<< HEAD
+
 
         // TODO: Misc Animal Things
-=======
->>>>>>> de6765d56852a9a4e1f774162c4e84496386a7a4
+
         internal static int GetCategoryId(string categoryName)
         {
             var categoryID = db.Categories.Where(c => c.Name == categoryName).Select(i => i.CategoryId).FirstOrDefault();
@@ -355,7 +353,10 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+           
+
+
+
         }
         internal static void UpdateEmployee(Employee employeeWithUpdates)
         {
@@ -372,7 +373,7 @@ namespace HumaneSociety
                 return;
             }
             employeeFromDB.FirstName = employeeWithUpdates.FirstName;
-            employeeFromDB.LastName = employeeWithUpdates.LastName;           
+            employeeFromDB.LastName = employeeWithUpdates.LastName;
             employeeFromDB.EmployeeNumber = employeeWithUpdates.EmployeeNumber;
             employeeFromDB.Email = employeeWithUpdates.Email;
 
@@ -406,7 +407,7 @@ namespace HumaneSociety
             {
                 Console.WriteLine("No employees have a EmployeeId that matches the Employee passed in.");
                 Console.WriteLine("No employee has been removed.");
-                
+
             }
             return employeeFromDB;
         }
