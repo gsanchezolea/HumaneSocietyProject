@@ -228,7 +228,6 @@ namespace HumaneSociety
                         animal.Weight = Convert.ToInt32(updates[7]);
                         break;
                     case 8:
-                        animal.AnimalId = Convert.ToInt32(updates[8]);
                         break;
                 }
             }
@@ -236,7 +235,8 @@ namespace HumaneSociety
         }
         internal static void RemoveAnimal(Animal animal)
         {
-            db.Animals.DeleteOnSubmit(animal);
+            var deletedAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            db.Animals.DeleteOnSubmit(deletedAnimal);
             db.SubmitChanges();
         }
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates)
