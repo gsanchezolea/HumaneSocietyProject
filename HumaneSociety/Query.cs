@@ -375,7 +375,7 @@ namespace HumaneSociety
         }
         internal static void  SelectEmployee(Employee employeeToCheck)
         {
-            Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeToCheck.EmployeeId).FirstOrDefault();
+            Employee employeeFromDb = db.Employees.Where(e => e.EmployeeNumber == employeeToCheck.EmployeeNumber).FirstOrDefault();
 
             if(employeeFromDb == null)
             {
