@@ -235,42 +235,44 @@ namespace HumaneSociety
         }
         internal static void RemoveAnimal(Animal animal)
         {
-            var deletedAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            var deletedAnimal = db.Animals.Where(a => a == animal).FirstOrDefault();
             db.Animals.DeleteOnSubmit(deletedAnimal);
             db.SubmitChanges();
         }
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates)
         {
-            var animal = db.Animals;
-            foreach (var update in updates)
+            var animal = db.Animals.Select(s => s);
+            foreach (KeyValuePair<int,string> update in updates)
             {
                 switch (update.Key)
                 {
                     case 1:
-                        animal.Where(a => a.Category.Name == updates[1]);
+                        animal = animal.Where(a => a.Category.Name == update.Value);
                         break;
                     case 2:
-                        animal.Where(a => a.Name == updates[2]);
+                        animal = animal.Where(a => a.Name == update.Value);
                         break;
                     case 3:
-                        animal.Where(a => a.Age == Convert.ToInt32(updates[3]));
+                        animal = animal.Where(a => a.Age == Convert.ToInt32(update.Value));
                         break;
                     case 4:
-                        animal.Where(a => a.Demeanor == updates[4]);
+                        animal = animal.Where(a => a.Demeanor == update.Value);
                         break;
                     case 5:
-                        animal.Where(a => a.KidFriendly == Convert.ToBoolean(Convert.ToInt32(updates[5])));
+                        animal = animal.Where(a => a.KidFriendly == Convert.ToBoolean(Convert.ToInt32(update.Value)));
                         break;
                     case 6:
-                        animal.Where(a => a.PetFriendly == Convert.ToBoolean(Convert.ToInt32(updates[6])));
+                        animal = animal.Where(a => a.PetFriendly == Convert.ToBoolean(Convert.ToInt32(update.Value)));
                         break;
                     case 7:
-                        animal.Where(a => a.Weight == Convert.ToInt32(updates[7]));
+                        animal = animal.Where(a => a.Weight == Convert.ToInt32(update.Value));
                         break;
                     case 8:
-                        animal.Where(a => a.AnimalId == Convert.ToInt32(updates[8]));
+                        animal = animal.Where(a => a.AnimalId == Convert.ToInt32(update.Value));
                         break;
+                    
                 }
+               
             }
             return animal;
         }
